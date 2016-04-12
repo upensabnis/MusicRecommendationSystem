@@ -19,8 +19,7 @@ max_value={}
 start_time = time.time()
 
 fields=["danceability",
-		"duration",
-		"loudness"]
+		"duration"]
 		
 for field in fields:
 	values[field]=[]
