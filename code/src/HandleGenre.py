@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Mon Apr 11 23:30:44 2016
+
+@author: nachiketbhagwat
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Fri Apr  8 20:15:14 2016
 
 @author: nachiketbhagwat
@@ -7,7 +14,7 @@ Created on Fri Apr  8 20:15:14 2016
 
 from pymongo import MongoClient
 
-def Apriori(ip, port, dbName, collectionName, term, support):    
+def apriori(ip, port, dbName, collectionName, term, support):    
     count = 0
     client = MongoClient(ip, port)
     db = client[dbName]
@@ -40,6 +47,7 @@ def Apriori(ip, port, dbName, collectionName, term, support):
     return genres.keys()
     client.close()
     
+'''
 def PushGenres(ip, port, dbName, collectionName, doc):
     client = MongoClient(ip, port)
     db = client[dbName]
@@ -47,13 +55,31 @@ def PushGenres(ip, port, dbName, collectionName, doc):
     collection.drop()
     result = db.collection.insert_one(doc)
     client.close()
-    return    
+    return
+'''
     
-def DeleteGenre(ip, port, dbName, collectionName, term, values):
+def deleteGenre(ip, port, dbName, collectionName, term, values):
     client = MongoClient(ip, port)
     db = client[dbName]
     collection = db[collectionName]    
     at = collection.find({})
     for doc in at:
         if(doc.has_key(term)): #& type(doc.get(term) == list)):
-            break
+            termValues = doc.get(term)
+            for i in termValues:
+                flag = 0
+                for j in values:
+                    if i == j:
+                        flag = 1
+                        break
+                if flag == 0:
+                    termValues.remove(i)
+            #print termValues
+            try:
+                result = collection.update_one( {"_id": doc.get("_id")},
+                                                 {"$set": {term: termValues}}
+                                            )
+                #break
+            except AttributeError, e:
+                print e
+                print 'forgot -summary flag? specified wrong getter?'
