@@ -6,7 +6,7 @@ from pymongo import MongoClient
 client = MongoClient()
 
 
-db = client.new_database
+db = client.temp_database
 collections = db.tracks
 
 dic = {}

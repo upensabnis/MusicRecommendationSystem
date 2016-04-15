@@ -36,6 +36,7 @@ def extractValues(hdf5path, summary, fields):
     
     songidx = 0
     onegetter = ''
+#    print hdf5path
     h5 = hdf5_getters.open_h5_file_read(hdf5path)
 
     # get all getters
@@ -79,10 +80,10 @@ def extractValues(hdf5path, summary, fields):
             
         else:
             retDict[getter[4:]] = res
-            print getter[4:]+":",res
+            #print getter[4:]+":",res
 
     # done
     #print 'DONE, showed song',songidx,'/',numSongs-1,'in file:',hdf5path
     h5.close()
-    print retDict
+#    print retDict
     return retDict    
