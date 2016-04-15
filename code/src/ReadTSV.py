@@ -20,8 +20,8 @@ with open('followers.tsv', 'rb') as csvfile:
 			counter = counter + 1
 			continue
 			
-		if(counter == 5):
-			break	
+		#if(counter == 5):
+		#	break	
 		
 		followersDict = {}
 		followersDict['_id'] = "f"+ str(counter).zfill(10)
@@ -46,8 +46,8 @@ with open('likes.tsv', 'rb') as csvfile:
 			counter = counter + 1
 			continue
 				
-		if(counter == 5):
-			break	
+		#if(counter == 5):
+		#	break	
 		
 		likesDict = {}
 		likesDict['_id'] = "l"+ str(counter).zfill(10)
