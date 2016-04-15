@@ -30,6 +30,7 @@ import sys
 import hdf5_getters
 import numpy as np
 import math
+Global_Constant = sys.float_info.max
 
 def extractValues(hdf5path, summary, fields):
 
@@ -75,7 +76,7 @@ def extractValues(hdf5path, summary, fields):
         #print res
         if res.__class__.__name__ == 'float64':
             if math.isnan(res):
-                res = 0
+                res = Global_Constant
                 
         if res.__class__.__name__ == 'ndarray':
             #print getter[4:]+": shape =",res.shape
