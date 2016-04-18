@@ -29,6 +29,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import hdf5_getters
 import numpy as np
+import math
+Global_Constant = sys.float_info.max
 
 def extractValues(hdf5path, summary, fields):
 
@@ -36,6 +38,7 @@ def extractValues(hdf5path, summary, fields):
     
     songidx = 0
     onegetter = ''
+#    print hdf5path
     h5 = hdf5_getters.open_h5_file_read(hdf5path)
 
     # get all getters
@@ -68,6 +71,13 @@ def extractValues(hdf5path, summary, fields):
             else:
                 print e
                 print 'forgot -summary flag? specified wrong getter?'
+        
+        #print getter + "\n"
+        #print res
+        if res.__class__.__name__ == 'float64':
+            if math.isnan(res):
+                res = Global_Constant
+                
         if res.__class__.__name__ == 'ndarray':
             #print getter[4:]+": shape =",res.shape
             newlist = []            
@@ -79,10 +89,9 @@ def extractValues(hdf5path, summary, fields):
             
         else:
             retDict[getter[4:]] = res
-            print getter[4:]+":",res
-
+            
     # done
     #print 'DONE, showed song',songidx,'/',numSongs-1,'in file:',hdf5path
     h5.close()
-    print retDict
+#    print retDict
     return retDict    

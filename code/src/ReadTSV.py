@@ -19,8 +19,11 @@ with open('/home/user/Documents/datamining/project/archive/followers.tsv', 'rb')
 		if(counter == 0):
 			counter = counter + 1
 			continue
+<<<<<<< HEAD
 			
 			
+=======
+>>>>>>> ef23933c2e3ec167ddfe0cad733453bee02451da
 		
 		followersDict = {}
 		followersDict['_id'] = "f"+ str(counter).zfill(10)
@@ -44,7 +47,10 @@ with open('/home/user/Documents/datamining/project/archive/likes.tsv', 'rb') as 
 		if(counter == 0):
 			counter = counter + 1
 			continue
+<<<<<<< HEAD
 				
+=======
+>>>>>>> ef23933c2e3ec167ddfe0cad733453bee02451da
 		
 		likesDict = {}
 		likesDict['_id'] = "l"+ str(counter).zfill(10)
