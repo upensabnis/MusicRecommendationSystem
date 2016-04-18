@@ -17,7 +17,7 @@ import time
 from ExtractFields import extractValues
 from pymongo import MongoClient
 
-BASE_DIR = "/home/user/Dropbox/Data Mining/Project/millionsongsubset_full/millionsongsubset_full/MillionSongSubset/data"
+BASE_DIR = "/home/user/Documents/datamining/project/MillionSongSubset/data/"
 
 count = 0
 start_time = time.time()
@@ -37,12 +37,12 @@ for (dir, _, files) in os.walk(BASE_DIR):
             "bars_confidence",
             "beats_confidence",
             "similar_artists",
-            "analysis_sample_rate", #problem
+            #"analysis_sample_rate", #problem
             "artist_familiarity",
             "artist_hotttnesss",
             "artist_id",
             "artist_name",
-            "year", #problem
+            #"year", #problem
             "danceability",
             "duration",
             "energy",
@@ -51,22 +51,20 @@ for (dir, _, files) in os.walk(BASE_DIR):
             "song_hotttnesss",
             "song_id",
             "tempo",
-            "time_signature", #problem
+            #"time_signature", #problem
             "title",
             "track_id"
         ]
         output = extractValues(path, False, fields)
         #print type(output)
-        print output 
+        #print output 
         tmp = {} 
         result = db.tracks.insert_one(output)
-        #print result
+        print result
         
         
         count = count + 1
-        break
-	if count !=0:
-		break
+    
         
 print count
 print("--- %s seconds ---" % (time.time() - start_time))

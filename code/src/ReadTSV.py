@@ -12,7 +12,7 @@ db = client.temp_database
 followers = db.followers
 counter = 0
 
-with open('followers.tsv', 'rb') as csvfile:
+with open('/home/user/Documents/datamining/project/archive/followers.tsv', 'rb') as csvfile:
 	followersreader = csv.reader(csvfile, delimiter='	', quotechar='|')
 	
 	for row in followersreader:
@@ -20,8 +20,7 @@ with open('followers.tsv', 'rb') as csvfile:
 			counter = counter + 1
 			continue
 			
-		if(counter == 5):
-			break	
+			
 		
 		followersDict = {}
 		followersDict['_id'] = "f"+ str(counter).zfill(10)
@@ -38,7 +37,7 @@ db = client.temp_database
 likes = db.likes
 counter = 0
 
-with open('likes.tsv', 'rb') as csvfile:
+with open('/home/user/Documents/datamining/project/archive/likes.tsv', 'rb') as csvfile:
 	likesreader = csv.reader(csvfile, delimiter='	', quotechar='|')
 	
 	for row in likesreader:
@@ -46,8 +45,6 @@ with open('likes.tsv', 'rb') as csvfile:
 			counter = counter + 1
 			continue
 				
-		if(counter == 5):
-			break	
 		
 		likesDict = {}
 		likesDict['_id'] = "l"+ str(counter).zfill(10)
@@ -64,7 +61,7 @@ db = client.temp_database
 jams = db.jams
 counter = 0
 
-with open('jams.tsv', 'rU') as csvfile:
+with open('/home/user/Documents/datamining/project/archive/jams.tsv', 'rU') as csvfile:
 	jamsreader = csv.reader(csvfile, delimiter='	', quotechar='|')
 	
 	for row in jamsreader:

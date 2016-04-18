@@ -6,7 +6,7 @@ from pymongo import MongoClient
 client = MongoClient()
 
 
-db = client.new_database
+db = client.temp_database
 collections = db.tracks
 
 dic = {}
@@ -19,7 +19,8 @@ max_value={}
 start_time = time.time()
 
 fields=["danceability",
-		"duration"]
+		"duration",
+		"loudness"]
 		
 for field in fields:
 	values[field]=[]
