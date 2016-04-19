@@ -24,6 +24,7 @@ gener_user={}
 
 def get_tracks(title,artist):
 	artist_terms=[]
+	#print title,artist
 	for collection in db.tracks.find({'artist_name':artist,'title':title}):
 		artist_terms=collection['artist_terms']
 		return artist_terms
@@ -41,25 +42,13 @@ def get_data():
 	counte=0
 	gener_user={}
 	
-	for collection in jam.find():
-		user_id[collection['title']]=0
+	#for collection in jam.find():
+	#	user_id[collection['title']]=0
 		
-	print len(user_id)
+	#print len(user_id)
 			
-	for gener in geners:
-			gener_user[gener]=0
-	
-	#for key,value in user_id.items():
-	#	user_gener[key]=gener_user
-		#print user_gener
-	
-	'''for key,value in user_id.items():
-		temp=key
-		
-		user_gener.get(key).get('folk')=
-		print a
-		break
-	print user_gener.get(temp)'''
+	#for gener in geners:
+	#		gener_user[gener]=0
 	
 	print("--- %s seconds ---" % (time.time() - start_time))
 	
@@ -77,6 +66,7 @@ def get_data():
 		artist_terms = get_tracks(title,artist)
 			
 		if len(artist_terms) != 0:
+			#print artist,title
 			userId = jams['title']
 			if user_gener.has_key(userId)!=None:
 				tmp_gnr = {}
@@ -92,9 +82,13 @@ def get_data():
 					counter=counter+1
 			user_gener[userId] = tmp
 		
-		if countere == 2:
+		if countere==4:
 			break
+		
 			
+		if counter3%10000==0:
+			print counter3
+				
 	print counter3
 	#print user_gener
 	
