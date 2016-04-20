@@ -38,9 +38,9 @@ for user in user_loop:   #Changes the dic in the format userId:[values of tracks
 	user_data[user]=values
 	
 	
-def getRandomCentroids(): 	#return some random centroids
+def getRandomCentroids(num_centroids): 	#return some random centroids
 	temp={}
-	for i in range(10):
+	for i in range(num_centroids):
 		values=[]
 		userId=random.choice(user_data.keys())
 		centroid[i]=user_data[userId]
@@ -118,7 +118,7 @@ def shouldstop(oldcentroids,centroids):
 def clustering():
 	
 	oldcentroids={}
-	centroids=getRandomCentroids()    # centroids and old centroids are Dictonary
+	centroids=getRandomCentroids(10)    # centroids and old centroids are Dictonary
 	start_time = time.time()
 	while not shouldstop(oldcentroids,centroids):
 		centroid_id=[]
