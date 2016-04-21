@@ -38,15 +38,15 @@ def get_data():
 	start_time=time.time()
 	
 	artist_terms=[]
-	count=0
+	#count=0
 	for collection in jam.find():
 		user_id[collection['title']]=0
 		count=count+1
-		if len(user_id) == 50:
-			break
+		#if len(user_id) == 50:
+		#	break
 		
 	print len(user_id)
-	
+	user_counter = 0
 	print("--- %s seconds ---" % (time.time() - start_time))
 	
 	start_time=time.time()
@@ -78,6 +78,10 @@ def get_data():
 			print result
 			print user_geners
 		
+		if(user_counter % 10000 == 0)
+			print user_counter
+		
+		user_counter = user_counter+1
 		
 	print("--- %s seconds ---" % (time.time() - start_time))
 	
@@ -87,8 +91,3 @@ def main():
 	get_data()
 	
 main()	
-
-
-
-
-
