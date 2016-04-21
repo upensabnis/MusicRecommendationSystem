@@ -16,7 +16,8 @@ client = MongoClient()
 db = client.jam_database
 track = db.tracks
 jam = db.jams
-user_gener=db.user_gener
+db2=client.temp_jam_database
+user_gener=db2.user_gener
 
 geners = apriori("127.0.0.1", 27017,"temp_database", "tracks", "artist_terms", 0.1)
 user_gener={}
@@ -82,9 +83,6 @@ def get_data():
 					counter=counter+1
 			user_gener[userId] = tmp
 		
-		if countere==4:
-			break
-		
 			
 		if counter3%10000==0:
 			print counter3
@@ -96,7 +94,7 @@ def get_data():
 		mongo_data={}
 		mongo_data['user_id']=key
 		mongo_data['track']=value
-		result = db.user_gener.insert_one(mongo_data)
+		result = db2.user_gener.insert_one(mongo_data)
 		print result
 
 	print("--- %s seconds ---" % (time.time() - start_time))

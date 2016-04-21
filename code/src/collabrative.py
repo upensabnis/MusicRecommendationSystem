@@ -13,13 +13,13 @@ from enum import Enum
 	
 client = MongoClient()
 
-db = client.temp_database
-track = db.tracks
+db = client.jam_database
+#track = db.tracks
 jam = db.jams
-user_gener=db.user_gener
+#user_gener=db.user_gener
 
 geners = apriori("127.0.0.1", 27017,"temp_database", "tracks", "artist_terms", 0.1)
-
+user_gener={}
 
 def get_tracks(title,artist):
 	artist_terms=[]
@@ -39,16 +39,25 @@ def get_data():
 	
 	artist_terms=[]
 	count=0
+	
 	for collection in jam.find():
 		user_id[collection['title']]=0
 		count=count+1
-		if len(user_id) == 50:
-			break
-		
-	print len(user_id)
+		break
+	
+	for key,value in user_id.items():
+		user_gener['user_id']=key
+	
+		for gener in geners:
+			user_gener[gener]=0
+			
+	print user_gener
+	#print len(user_id)
+	
 	
 	print("--- %s seconds ---" % (time.time() - start_time))
 	
+	'''
 	start_time=time.time()
 	for key,value in user_id.items():   #loop through the whole user list
 		user_geners={}
@@ -76,11 +85,11 @@ def get_data():
 		if sum_geners != 0:
 			result = db.user_gener.insert_one(user_geners)
 			print result
-			print user_geners
+			#print user_geners
 		
 		
 	print("--- %s seconds ---" % (time.time() - start_time))
-	
+	'''
 	
 	
 def main():
