@@ -6,6 +6,8 @@ client = MongoClient()
 db = client.temp_database
 tracks = db.tracks
 jams = db.jams
+contentTrain = db.contentTrain
+contentTest = db.contentTest
 
 def get_tracks(title,artist):
 	artist_terms=[]
@@ -18,6 +20,8 @@ def merge_title_artist(title, artist):
     return title + ":" + artist
  
 if __name__== "__main__":
+
+     start_time = time.time()
      trackCountDict = {}
      songDict = {}
      
@@ -62,12 +66,52 @@ if __name__== "__main__":
 			uDict[tid] = uDict[tid] + 1
            
      #print trackCountDict
+           
+     testDict = {}
+     trainDict = {}
      count = 0
      for user in trackCountDict.keys():
          songs = trackCountDict.get(user)
-         if (len(songs) > 5):
+         train = songs
+         if (len(songs.keys()) > 5): # more than 5 songed users
              count = count +1
-             #print songs
-             print "\n"
+             num_songs = len(songs.keys())
+             slash = int((num_songs * 4) / 5) # divide data into train and test
+             keys = songs.keys()
+
+             train = keys[:slash]
+             test = keys[slash:]
+
+             tmpDict = {}
+             for i in train:
+                 tmpDict[i] = songs.get(i)
+             train = tmpDict
+             tmpDict = {}
+             for i in test:
+                 tmpDict[i] = songs.get(i)
+             test = tmpDict
+             
+             testDict[user] = test
+         trainDict[user] = train
+     print len(trainDict)
+     print "\n"     
+     
+     print len(testDict)
      print count
      print len(trackCountDict.keys())
+     
+     it = testDict.iteritems()
+     for i in testDict:
+          k,v = it.next()
+          tmpDict = {}
+          tmpDict[k] = v
+          db.contentTest.insert_one(tmpDict)
+          
+     it = trainDict.iteritems()
+     for i in trainDict:
+          k,v = it.next()
+          tmpDict = {}
+          tmpDict[k] = v
+          db.contentTrain.insert_one(tmpDict)
+
+     print("--- %s seconds ---" % (time.time() - start_time))
