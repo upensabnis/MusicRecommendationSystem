@@ -2,7 +2,7 @@ import os
 import time
 from ExtractFields import extractValues
 from pymongo import MongoClient
-
+import matplotlib.pyplot as plt
 import time
 import random
 import numpy
@@ -99,9 +99,12 @@ def calc_correlation(centroid,userterm):
 
 		#function to check if centroids are same
 
-def shouldstop(oldcentroids,centroids):
-	print "" 
-	key=list(centroids.keys())
+def shouldstop(oldcentroids,centroids,iteration):
+	limit=10
+	if iteration==limit:
+		return True
+	return False
+	'''key=list(centroids.keys())
 	oldcentroid_value=[]
 	centroid_value=[]
 	oldcentroid_value=list(oldcentroids.values())
@@ -111,7 +114,7 @@ def shouldstop(oldcentroids,centroids):
 			if oldcentroid_value[i] != centroid_value[i]:
 				return False
 		return True
-	return False
+	return False'''
 	
 	### Main K-means clustering
 	
@@ -120,7 +123,9 @@ def clustering():
 	oldcentroids={}
 	centroids=getRandomCentroids(10)    # centroids and old centroids are Dictonary
 	start_time = time.time()
-	while not shouldstop(oldcentroids,centroids):
+	iteration=0
+	while not shouldstop(oldcentroids,centroids,iteration):
+		iteration=iteration+1
 		centroid_id=[]
 		clusters={}
 		centroid_id=list(centroids.keys())
@@ -147,12 +152,15 @@ def clustering():
 		#print clusters	
 		centroids = getcentroids(clusters,len(centroid_value))	
 	
+
+	'''
 	for key,value in clusters.items():
 		mongo_data={}
 		mongo_data['cluster']=key
 		mongo_data['users']=value
+		mongo_data['cluster_centroid']=oldcentroids[key]
 		result = db.cluster.insert_one(mongo_data)
-		print result
+		print result'''
 		
 	print("--- %s seconds ---" % (time.time() - start_time))
 		
