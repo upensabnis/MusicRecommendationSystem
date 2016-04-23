@@ -18,9 +18,15 @@ max_value={}
 
 start_time = time.time()
 
-fields=["danceability",
-		"duration",
-		"loudness"]
+fields=[
+    "artist_familiarity",
+    "artist_hotttnesss",
+    "danceability",
+    "energy",
+    "loudness",
+    "song_hotttnesss",
+    "tempo"
+    ]
 		
 for field in fields:
 	values[field]=[]
@@ -42,7 +48,7 @@ for collection in collections.find(no_cursor_timeout=True):
 			result=db.tracks.update_one( {"_id": collection.get("_id")},
                                                  {"$set": {field:Normalized_value}}
 											)
-			print result
+			#print result
 		except ZeroDivisionError:
 			print ""
 			
