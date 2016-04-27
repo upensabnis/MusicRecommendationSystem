@@ -4,9 +4,9 @@ Created on Fri Apr 22 14:02:40 2016
 
 @author: nachiketbhagwat
 """
-import os
 import time
 from pymongo import MongoClient
+import math
 
 songs_attr = 7
 songDict = {}
@@ -20,16 +20,16 @@ def DotProduct(v1, v2):
     return ret
 
 def GetThetas(songs, users, songsinfo, usersongs, thetas):
-    alpha = 0.0001
-    lambdaa = 0
+    alpha = 0.5
+    lambdaa = 0.0001
     thetas = []
     
     for j in range (0, users):
         thetas.append([1, 1, 1,1,1,1,1])#iniialize thetas to zero
     
         
-    for iterations in range(0,20):
-        print iterations
+    for iterations in range(0,10):
+        #print iterations
         usersKeys = usersongs.keys()
         for j in range(0, users):#for j users
             uId = usersKeys[j]
@@ -46,6 +46,24 @@ def GetThetas(songs, users, songsinfo, usersongs, thetas):
                     else:
                         thetas[j][k] = thetas[j][k] - alpha * ((DotProduct(thetas[j], songsinfo[songId])- songlist.get(songId)) * songsinfo[songId][k] +  lambdaa*thetas[j][k] )
     #print thetas[0]
+    
+    count = 0
+    squaredError = 0
+    usersKeys
+    for j in range(0, users):
+        uId = usersKeys[j]
+        songlist = usersongs.get(uId)
+        songKeys = songlist.keys()
+        length = len(songKeys)
+        for i in range (0,length):#for i songs
+            songId = songKeys[i]
+            squaredError = squaredError + DotProduct(thetas[j], songsinfo[songId])**2
+            count = count + 1
+    meanSquaredError = squaredError/count
+    rootMeanSquaredError = math.sqrt(meanSquaredError)
+    print "rootMeanSquaredError:" 
+    print rootMeanSquaredError
+    
     return thetas
 
 def initSong(songDict):
@@ -132,10 +150,12 @@ for i in range(0, length):
         product = DotProduct(v1,v2)
         if(product)> 1:
             count0 = count0 + 1
-        if(product)> 0.75:
-            count1 = count1 + 1
+            print j
+    
+            print "\n"
     sum0 = sum0 + float(count0)/len(usongs)
     sum1 = sum1 + float(count1)/len(usongs)
+    
 print sum0/length
 print sum1/length
 print("--- %s seconds ---" % (time.time() - start_time))
